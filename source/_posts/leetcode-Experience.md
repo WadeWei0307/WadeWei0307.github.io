@@ -1,7 +1,7 @@
 ---
 #此區稱為front-matter
 title: leetcode Experience
-description: 紀錄程式自我學習 #butterfly.yml中 index_post_content 調整
+description: 紀錄程式自我學習 #butterfly.yml中 index_post_content 調整, 文章封面會顯示此段文字
 date: 2022-11-01 19:18:00
 categories: 
   - Code Training
@@ -773,6 +773,39 @@ vector<int> leetcode_350::intersect_2(vector<int>& nums1, vector<int>& nums2) {
 }
 ```
 * <font color="red">時間複雜度：</font>遍歷兩個vector各一次，所以O(n)。
+### Q448
+* <font color="red"> 題目：</font>給一個1-n長的vector，找出1-n沒出現過的數字<br>
+[原題目連結](https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/)<br>
+* <font color="red">範例：</font><br>
+1. <br>
+```text
+Input: nums = [4,3,2,7,8,2,3,1]
+Output: [5,6]
+```
+2. <br>
+```text
+Input: nums = [1,1]
+Output: [2]
+```
+* <font color="red">想法：</font>
+1. 可利用set，將出現過的數字存入set，再利用set跑1-n的迴圈判斷1-n誰沒出現過。<font color="orange">(時間較慢)</font>
+2. 利用兩個vector <font color="orange">速度較快</font>。
+```c++=
+vector<int> leetcode_448::findDisappearedNumbers(vector<int>& nums) {
+    vector<bool> vote(nums.size() + 1, false); //因為需要1~nums.size的空間，所以需要+1
+    vector<int> ans;
+    for (int i = 0; i < nums.size(); i++) { //將出現過的數字n於vote的第n個位置變成TRUE
+        if (!vote[nums[i]])
+            vote[nums[i]] = true;
+    }
+    for (int i = 1; i <= nums.size(); i++) { //從1~nums.size找出vote為false的位置
+        if (!vote[i])
+            ans.push_back(i);
+    }
+    return ans;
+}
+```
+* <font color="red">時間複雜度：</font>遍歷nums vector一次以及vote vector一次，所以O(n)。
 ### Q463
 * <font color="red"> 題目：</font>找出圍起來的陸地的周長。<br>
 [原題目連結](https://leetcode.com/problems/island-perimeter/)<br>
@@ -991,3 +1024,38 @@ int leetcode_137::singleNumber2(vector<int>& nums) {
 }
 ```
 * <font color="red">時間複雜度：</font>第一個for為常數時間O(32) = O(1)，第二個為遍歷vector nums，所以O(1) * O(n) = O(n)。
+## Dynamic Programming 相關問題
+### Q62
+* <font color="red"> 題目：</font>給兩個int，分別代表長(n)和寬(m)，從左上角走到右下角，途中只能往右或往下的方法有幾種<br>
+[原題目連結](https://leetcode.com/problems/unique-paths/)<br>
+* <font color="red">範例：</font><br>
+1.  <br>
+{% asset_img leet_62.jpg leetcode 463 image %}
+```text
+Input: m = 3, n = 7
+Output: 28
+```
+2. <br>
+```text
+Input: m = 3, n = 2
+Output: 3
+Explanation: From the top-left corner, there are a total of 3 ways to reach the bottom-right corner:
+1. Right -> Down -> Down
+2. Down -> Down -> Right
+3. Down -> Right -> Down
+```
+* <font color="red">想法：</font>
+1.將每個方向(R or D)想像成必須組合他們已到達目的地，如：RRRDD(m=3,n=4)，他就是5!/3!2!，從前者公式可以看出其為：(n*(n+1)*...*(n+m-2)) / (1*...*(m-1))。
+2.其實這是一題DP的題目，他可以從計算每格的步數來算出最後到達目的地的步數，但這裡是用較快的數學方式寫法。
+```c++=
+int leetcode_62::uniquePaths(int m, int n) {
+    int molecular = m - 1; //(分子)
+    int denominator = n - 1; //(分母)
+    double sum = 1.0; //avoid have double like = 3/2 in operation
+    for (int i = 1; i <= molecular; i++) {
+        sum = sum * (denominator + i) / i;
+    }
+    return (int)sum;
+}
+```
+* <font color="red">時間複雜度：</font>走一個寬度或長度，故O(n-1) or O(m-1)。
