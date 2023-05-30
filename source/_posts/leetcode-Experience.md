@@ -16,7 +16,7 @@ top_img:
 
 # Easy Part
 ## Array 相關問題
-### Q1
+### Q1 - Top Interview
 * <font color="red"> 題目：</font>給定一個vector nums和一個int target，必須在vector內的元素找到兩個相加等於target的位置。<br>
 [原題目連結](https://leetcode.com/problems/two-sum/)<br>
 * <font color="red">範例：</font><br>
@@ -45,7 +45,7 @@ vector<int> leetcode_1::twoSum(vector<int>& nums, int target) {
 }
 ```
 * <font color="red">時間複雜度：</font>走訪一次nums，所以O(n)。<br>
-### Q26
+### Q26 - Top Interview
 * <font color="red"> 題目：</font>給一個non-decreasing order的 vector nums，要移除相同的元素，並回傳剩餘元素的個數。<br>
 [原題目連結](https://leetcode.com/problems/remove-duplicates-from-sorted-array/)<br>
 * <font color="red">範例：</font><br>
@@ -145,7 +145,7 @@ int leetcode_35::searchInsert(vector<int>& nums, int target) {
 }
 ```
 * <font color="red">時間複雜度：</font>binary search，所以O(log(n))。<br>
-### Q66
+### Q66 - Top Interview
 * <font color="red"> 題目：</font>給一個vector digits，必須把裡頭的元素當成int加1。<br>
 [原題目連結](https://leetcode.com/problems/plus-one/)<br>
 * <font color="red">範例：</font><br>
@@ -199,7 +199,7 @@ vector<int> leetcode_66::plusOne(vector<int>& digits) {
 }
 ```
 * <font color="red">時間複雜度：</font>走訪一次digits，所以O(n)。<br>
-### Q88
+### Q88 - Top Interview
 * <font color="red"> 題目：</font>給vector nums1及該vector實際上有value的個數m，以及vector nums2及該vector實際上有value的個數n(也等於nums2.size())，必須將兩個vector合併且是non-decreasing order vector。<br>
 特殊要求：不得宣告其餘空間，只能回傳nums1。<br>
 [原題目連結](https://leetcode.com/problems/merge-sorted-array/)<br>
@@ -257,7 +257,7 @@ void leetcode_88::merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
 * <font color="red">時間複雜度：</font><br>
 1. 若為想法1，則為走訪一個nums1 or nums2，所以為O(n)。<br>
 2. 若為想法2，則最快的排序只能到達O(log(n))。<br>
-### Q108
+### Q108 - Top Interview
 * <font color="red"> 題目：</font>將給定的vector nums1轉成binary tree。<br>
 [原題目連結](https://leetcode.com/problems/convert-sorted-array-to-binary-search-tree/)<br>
 * <font color="red">範例：</font><br>
@@ -300,7 +300,7 @@ TreeNode* leetcode_108::binarySearch(vector<int>& nums, int start, int end) {
 }
 ```
 * <font color="red">時間複雜度：</font>每個binarySearch function為O(log(n))，nums裡的每個元素都會走一次binarySearch function，所以為O(nlog(n))。
-### Q118
+### Q118 - Top Interview
 * <font color="red"> 題目：</font>給一個整數n，回傳巴斯卡三角形前n層所有組合。<br>
 [原題目連結](https://leetcode.com/problems/pascals-triangle/)<br>
 * <font color="red">範例：</font><br>
@@ -388,7 +388,7 @@ vector<int> leetcode_119::getRow(int rowIndex) {
 }
 ```
 * <font color="red">時間複雜度：</font>只需把第n層的每個係數算出來，所以O(n)。
-### Q121
+### Q121 - Top Interview
 * <font color="red"> 題目：</font>給一個vector，n個元素表示n日的股價，算出最大的收益<br>
 [原題目連結](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)<br>
 * <font color="red">範例：</font><br>
@@ -425,7 +425,7 @@ int leetcode_121::maxProfit(vector<int>& prices) {
 }
 ```
 * <font color="red">時間複雜度：</font>遍歷每天的股價，所以O(n)。
-### Q136
+### Q136 - Top Interview
 * <font color="red"> 題目：</font>給一段vector，判斷只出現過一次的元素，其餘皆剛好出現兩次<br>
 [原題目連結](https://leetcode.com/problems/single-number/)<br>
 * <font color="red">範例：</font><br>
@@ -455,7 +455,7 @@ int leetcode_136::singleNumber(vector<int>& nums) {
 }
 ```
 * <font color="red">時間複雜度：</font>遍歷每個元素，所以O(n)。
-### Q169
+### Q169 - Top Interview
 * <font color="red"> 題目：</font>給一段vector，找出出現最多次的元素<br>
 [原題目連結](https://leetcode.com/problems/majority-element/)<br>
 * <font color="red">範例：</font><br>
@@ -488,7 +488,7 @@ int leetcode_169::majorityElement(vector<int>& nums) {
 }
 ```
 * <font color="red">時間複雜度：</font>遍歷每個元素，所以O(n)。
-### Q217
+### Q217 - Top Interview
 * <font color="red"> 題目：</font>給一段vector，如果有出現重複則回傳TRUE，反之則FALSE。<br>
 [原題目連結](https://leetcode.com/problems/contains-duplicate/)<br>
 * <font color="red">範例：</font><br>
@@ -600,7 +600,7 @@ vector<string> leetcode_228::summaryRanges(vector<int>& nums) {
 }
 ```
 * <font color="red">時間複雜度：</font>遍歷每個元素，所以O(n)。
-### Q268
+### Q268 - Top Interview
 * <font color="red"> 題目：</font>給一vector的整數，找出少掉的數字。<br>
 [原題目連結](https://leetcode.com/problems/missing-number/)<br>
 * <font color="red">範例：</font><br>
@@ -635,7 +635,7 @@ int leetcode_268::missingNumber(vector<int>& nums) {
 }
 ```
 * <font color="red">時間複雜度：</font>遍歷每個元素，所以O(n)。
-### Q283
+### Q283 - Top Interview
 * <font color="red"> 題目：</font>給一vector排序好的整數，最後將0移到vector後方。<br>
 [原題目連結](https://leetcode.com/problems/move-zeroes/)<br>
 * <font color="red">範例：</font><br>
@@ -869,7 +869,7 @@ int leetcode_463::islandPerimeter(vector<vector<int>>& grid) {
 * <font color="red">時間複雜度：</font>遍歷兩次二維vector，所以O(n<sup>2</sup>)。
 # Medium Part
 ## Array 相關問題
-### Q11
+### Q11 - Top Interview
 * <font color="red"> 題目：</font>給一個vector整數表示數根柱子，找出可以裝出最多水的體積。<br>
 [原題目連結](https://leetcode.com/problems/container-with-most-water/)<br>
 * <font color="red">範例：</font><br>
@@ -912,7 +912,7 @@ int leetcode_11::maxArea(vector<int>& height) {
 }
 ```
 * <font color="red">時間複雜度：</font>幾乎都是要遍歷全部柱子，所以O(n)。
-### Q49
+### Q49 - Top Interview
 * <font color="red"> 題目：</font>給一個vector字串，將裡面的字元全部一樣的字串分成一組。<br>
 [原題目連結](https://leetcode.com/problems/group-anagrams/)<br>
 * <font color="red">範例：</font><br>
@@ -952,7 +952,7 @@ vector<vector<string>> leetcode_49::groupAnagrams(vector<string>& strs) {
 }
 ```
 * <font color="red">時間複雜度：</font>sort為O(nlogn)，再加上遍歷strs一遍O(n)，所以O(n<sup>2</sup>logn)。
-### Q122
+### Q122 - Top Interview
 * <font color="red"> 題目：</font>給一個vector整數當作每天的股價，在這幾天內得到最大的收益。<br>
 [原題目連結](https://leetcode.com/problems/best-time-to-buy-and-sell-stock-ii/)<br>
 * <font color="red">範例：</font><br>
@@ -1025,7 +1025,7 @@ int leetcode_137::singleNumber2(vector<int>& nums) {
 ```
 * <font color="red">時間複雜度：</font>第一個for為常數時間O(32) = O(1)，第二個為遍歷vector nums，所以O(1) * O(n) = O(n)。
 ## Dynamic Programming 相關問題
-### Q62
+### Q62 - Top Interview
 * <font color="red"> 題目：</font>給兩個int，分別代表長(n)和寬(m)，從左上角走到右下角，途中只能往右或往下的方法有幾種<br>
 [原題目連結](https://leetcode.com/problems/unique-paths/)<br>
 * <font color="red">範例：</font><br>
