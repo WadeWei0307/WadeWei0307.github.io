@@ -15,6 +15,45 @@ top_img:
 ---
 
 # Easy Part
+## Hash table 相關問題
+### Q13 - Top Interview
+* <font color="red"> 題目：</font>將羅馬數字換算成數字<br>
+[原題目連結](https://leetcode.com/problems/roman-to-integer/)<br>
+* <font color="red">範例：</font><br>
+1. <br>
+```text
+Input: s = "III"
+Output: 3
+Explanation: III = 3.
+```
+2. <br>
+```text
+Input: s = "LVIII"
+Output: 58
+Explanation: L = 50, V= 5, III = 3.
+```
+3. <br>
+```text
+Input: s = "MCMXCIV"
+Output: 1994
+Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
+```
+* <font color="red">想法：</font>若前一個羅馬字的大小比下一個羅馬字小的話則表示用-的；反之則用+的<br>
+```c++=
+int leetcode_13::romanToInt(string s) {
+    map<char, int> roman = { {'I', 1}, {'V', 5}, {'X', 10}, {'L', 50}, {'C', 100}, {'D', 500}, {'M', 1000} };
+    int result = 0;
+    for (int i = 0; i < s.length() - 1; i++) {
+        if (roman[s[i]] >= roman[s[i + 1]]) //如果比下一個大則表示可以直接加
+            result += roman[s[i]];
+        else //如果比下一個小則表示用減的
+            result -= roman[s[i]];
+    }
+    result += roman[s[s.length() - 1]]; //要把最後一個加回去
+    return result;
+}
+```
+* <font color="red">時間複雜度：</font>走一次input string的長度，所以O(n)。<br>
 ## Array 相關問題
 ### Q1 - Top Interview
 * <font color="red"> 題目：</font>給定一個vector nums和一個int target，必須在vector內的元素找到兩個相加等於target的位置。<br>
@@ -45,7 +84,7 @@ vector<int> leetcode_1::twoSum(vector<int>& nums, int target) {
 }
 ```
 * <font color="red">時間複雜度：</font>走訪一次nums，所以O(n)。<br>
-### Q26 - Top Interview
+### Q26
 * <font color="red"> 題目：</font>給一個non-decreasing order的 vector nums，要移除相同的元素，並回傳剩餘元素的個數。<br>
 [原題目連結](https://leetcode.com/problems/remove-duplicates-from-sorted-array/)<br>
 * <font color="red">範例：</font><br>
