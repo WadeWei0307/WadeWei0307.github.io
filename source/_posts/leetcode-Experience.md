@@ -15,6 +15,343 @@ top_img:
 ---
 
 # Easy Part
+## Dynamic Programming 相關問題
+### Q70 - Top Interview
+* <font color="red"> 題目：</font>一次只能爬1階或2階樓梯，判斷爬到n階樓梯可以有幾種方法<br>
+[原題目連結](https://leetcode.com/problems/climbing-stairs/description/)<br>
+* <font color="red">範例：</font><br>
+1. <br>
+```text
+Input: n = 2
+Output: 2
+Explanation: There are two ways to climb to the top.
+1. 1 step + 1 step
+2. 2 steps
+```
+2. <br>
+```text
+Input: n = 3
+Output: 3
+Explanation: There are three ways to climb to the top.
+1. 1 step + 1 step + 1 step
+2. 1 step + 2 steps
+3. 2 steps + 1 step
+```
+* <font color="red">想法：</font>透過DP的方式記得每層的方法，然後取得最終答案。<br>
+```c++=
+int leetcode_70::climbStairs(int n) {
+    vector<int> tempAns = { 1,1 };
+    if (n < 2)
+        return 1;
+    for (int i = 2; i <= n; i++) {
+        tempAns.push_back(tempAns[i - 1] + tempAns[i - 2]);
+    }
+    return tempAns[tempAns.size() - 1];
+}
+```
+* <font color="red">時間複雜度：</font>
+1.由於每層樓梯皆需要計算一次，所以O(n)。
+## Linked list 相關問題
+### Q21 - Top Interview
+* <font color="red"> 題目：</font>將兩條 sorted linked list合成一條 sorted linked list。<br>
+[原題目連結](https://leetcode.com/problems/merge-two-sorted-lists/)<br>
+* <font color="red">範例：</font><br>
+1. <br>
+```text
+Input: list1 = [1,2,4], list2 = [1,3,4]
+Output: [1,1,2,3,4,4]
+```
+2. <br>
+```text
+Input: list1 = [], list2 = []
+Output: []
+```
+3. <br>
+```text
+Input: list1 = [], list2 = [0]
+Output: [0]
+```
+* <font color="red">想法：</font>1.Iterative: 利用一個currentNode紀錄現在List串到哪裡，最後將所有沒串到的(表示為剩下最大的List order)List串回去。<br>
+```c++=
+ListNode* leetcode_21::mergeTwoLists(ListNode* list1, ListNode* list2) {
+    ListNode* resultNode = new ListNode(); //Record the final result head node
+
+    if (list1 == NULL && list2 == NULL)
+        return NULL;
+    else if (list1 == NULL || list2 == NULL)
+        return list1 == NULL ? list2 : list1;
+
+    //Let resultNode being head of list1 or head of list2
+    if (list1->val <= list2->val) {
+        resultNode = list1;
+        list1 = list1->next;
+    }
+    else {
+        resultNode = list2;
+        list2 = list2->next;
+    }
+
+    ListNode* currentNode = resultNode;//Record every step to link all node
+
+    while (list1 != NULL && list2 != NULL) {
+        if (list1->val <= list2->val) {
+            currentNode->next = list1; 
+            list1 = list1->next;
+        }
+        else {
+            currentNode->next = list2;
+            list2 = list2->next;
+        }
+        currentNode = currentNode->next; //Move to the lastest position
+    }
+    //**Add remaining of the biggest order**//
+    if (list1 == NULL)
+        currentNode->next = list2;
+    else
+        currentNode->next = list1;
+    //**Add remaining of the biggest order**//
+    return resultNode;
+}
+```
+* <font color="red">想法：</font>2.Recursive: <br>
+```c++=
+ListNode* leetcode_21::mergeTwoLists(ListNode* list1, ListNode* list2) {
+    if (list1 == NULL && list2 == NULL)
+            return NULL;
+    else if (list1 == NULL || list2 == NULL)
+        return list1 == NULL ? list2 : list1;
+    if(list1->val <= list2->val){
+        list1->next = mergeTwoLists(list1->next, list2);
+        return list1;
+    }
+    else{
+        list2->next = mergeTwoLists(list1, list2->next);
+        return list2;
+    }
+}
+```
+* <font color="red">時間複雜度：</font>
+1.兩條Linked List的長度，所以為O(n+m)。
+## Math 相關問題
+### Q9
+* <font color="red"> 題目：</font>判斷一個數字是否為迴文。<br>
+[原題目連結](https://leetcode.com/problems/palindrome-number/)<br>
+* <font color="red">範例：</font><br>
+1. <br>
+```text
+Input: x = 121
+Output: true
+Explanation: 121 reads as 121 from left to right and from right to left.
+```
+2. <br>
+```text
+Input: x = -121
+Output: false
+Explanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.
+```
+3. <br>
+```text
+Input: x = 10
+Output: false
+Explanation: Reads 01 from right to left. Therefore it is not a palindrome.
+```
+* <font color="red">想法：</font>透過取餘數可以從個位數的每個位數取出，並且累加到最後如果跟input一樣即是迴文。<br>
+```c++=
+bool leetcode_9::isPalindrome(int x) {
+    if (x < 0)
+        return false;
+    int tempx = x; //Need to record input / 10
+    int palindrome = 0; //final result compare with input
+    while (tempx != 0) {
+        if (palindrome < INT_MIN / 10 || palindrome > INT_MAX / 10) //avoid input reverse is out of type(int) range
+            break;
+        palindrome = palindrome * 10 + tempx % 10; //% 10 can find 個位數 then (padlindrome*10) put the original number to 十位數 or 百位數 ...
+        tempx /= 10;
+    }
+    if (palindrome == x)
+        return true;
+    else
+        return false;
+}
+```
+* <font color="red">時間複雜度：</font>
+1.取決於input有幾位數，所以以string的角度應為O(n)。
+### Q69 - Top Interview
+* <font color="red"> 題目：</font>回傳非負的整數開根號的整數結果。<br>
+[原題目連結](https://leetcode.com/problems/sqrtx)<br>
+* <font color="red">範例：</font><br>
+1. <br>
+```text
+Input: x = 4
+Output: 2
+Explanation: The square root of 4 is 2, so we return 2.
+```
+2. <br>
+```text
+Input: x = -121
+Output: false
+Explanation: From left to right, it reads -121. From right to left, it becomes 121-. Therefore it is not a palindrome.
+```
+3. <br>
+```text
+Input: x = 8
+Output: 2
+Explanation: The square root of 8 is 2.82842..., and since we round it down to the nearest integer, 2 is returned.
+```
+* <font color="red">想法：</font>先將input/2，並且之後透過Binary Search的概念搜尋<br>
+```c++=
+class leetcode_69 {
+public:
+    int mySqrt(int x);
+    int binarySearch(int x, int left, int right) {
+        if (x < 2)
+            return x;
+        int middle = (left + right) / 2;
+        long middleOfSquare = (long)middle * middle;
+        if (middleOfSquare == x)
+            return middle;
+        else if (middleOfSquare < x) { //平方和 < input x
+            if ((long)(middle + 1) * (middle + 1) > x)
+                return middle;
+            else
+                return binarySearch(x, middle + 1, right); //binary search concept
+        }
+        else
+            return binarySearch(x, left, middle - 1); //binary search concept
+    }
+};
+int leetcode_69::mySqrt(int x) {
+    return leetcode_69::binarySearch(x, 1, x / 2);
+}
+```
+* <font color="red">時間複雜度：</font>
+1.由於利用binary search搜尋範圍內的數字，所以是O(logn)。
+## String 相關問題
+### Q14 - Top Interview
+* <font color="red"> 題目：</font>找出Vector所有字串最長且共通的prefix。<br>
+[原題目連結](https://leetcode.com/problems/longest-common-prefix/)<br>
+* <font color="red">範例：</font><br>
+1. <br>
+```text
+Input: strs = ["flower","flow","flight"]
+Output: "fl"
+```
+2. <br>
+```text
+Input: strs = ["dog","racecar","car"]
+Output: ""
+Explanation: There is no common prefix among the input strings.
+```
+* <font color="red">想法：</font>先將Vector內的字串排序，排序之後可以保證只要比較第一個字串以及最後一個字串即可，因為只要第一個及最後一個的第一個字元一樣，則保證中間的字串第一個字元一定一樣，由於字串陣列的排序是一個字元一個字元排序的緣故。<br>
+```c++=
+string leetcode_14::longestCommonPrefix(vector<string>& strs) {
+    sort(strs.begin(), strs.end()); //字串陣列排序，會依據每個字元排列，會先找每個陣列第一個字元最小的擺到陣列第一個元素，依此類推
+    string ans = "";
+    for (int i = 0; i < strs[0].length(); i++) { //排序完後，我們只需要比陣列中的第一個及最後一個的字串即可
+        if (strs[0][i] == strs[strs.size() - 1][i])
+            ans += strs[0][i];
+        else
+            break;
+    }
+    return ans;
+}
+```
+* <font color="red">時間複雜度：</font>
+1.sort通常最快是O(nlogn)，但字串的排序不確定是不是也是O(nlogn)，所以目前暫時待定O(nlogn)。
+2.由於下方的for迴圈只是Vector內第一個字串的長度，所以算是常數的時間O(1)。
+### Q20 - Top Interview
+* <font color="red"> 題目：</font>判斷是否為合法的Parentheses (ex: (),({}),({[]}).)。<br>
+[原題目連結](https://leetcode.com/problems/valid-parentheses/)<br>
+* <font color="red">範例：</font><br>
+1. <br>
+```text
+Input: s = "()"
+Output: true
+```
+2. <br>
+```text
+Input: s = "()[]{}"
+Output: true
+```
+3. <br>
+```text
+Input: s = "(]"
+Output: false
+```
+* <font color="red">想法：</font>由於必須是兩兩一對，即使在最後一個向右的Symbol(,{,[，也必須搭配對應的Symbol，所以剛好符合Stack的概念。<br>
+```c++=
+bool leetcode_20::isValid(string s) {
+    stack<char> symbol;
+    map<char, char> m = { {'}','{'}, {']','['}, {')','('} };
+    for (int i = 0; i < s.length(); i++) {
+        if (!m.count(s[i])) //表示是向右的symbol
+            symbol.push(s[i]); //將向右的symbol推入stack
+        else { //表示是向左的symbol
+            if (symbol.empty()) //若stakc為空，top()會error，所以一定得先判斷stack是否為空
+                return false;
+            else if (symbol.top() == m[s[i]]) //若stack最上層的symbol跟hash table中的value一樣，表示valid
+                symbol.pop();
+            else //若stack最上層的symbol跟hash table中的value不一樣，表示invalid
+                return false;
+        }
+    }
+    if (!symbol.empty())
+        return false;
+    else
+        return true;
+}
+```
+* <font color="red">時間複雜度：</font>
+1.一個字串的長度，所以O(n)。
+### Q28 - Top Interview
+* <font color="red"> 題目：</font>找出目標第一次出現的字串的起始位置。<br>
+[原題目連結](https://leetcode.com/problems/find-the-index-of-the-first-occurrence-in-a-string/)<br>
+* <font color="red">範例：</font><br>
+1. <br>
+```text
+Input: haystack = "sadbutsad", needle = "sad"
+Output: 0
+Explanation: "sad" occurs at index 0 and 6.
+The first occurrence is at index 0, so we return 0.
+```
+2. <br>
+```text
+Input: haystack = "leetcode", needle = "leeto"
+Output: -1
+Explanation: "leeto" did not occur in "leetcode", so we return -1.
+```
+* <font color="red">想法：</font>用Needle去比對haystack的字串，在比對時(也就是第8行)可以利用雙指針來減少整個的執行時間。<br>
+```c++=
+int leetcode_28::strStr(string haystack, string needle) {
+    int ans;
+    int indexOfNeedle = 0; //紀錄needle現在的位置
+    bool firstMatch = true; //判斷是否第一次字元Match
+    for (int i = 0; i < haystack.length(); i++) {
+        if (indexOfNeedle == needle.length()) //如果needle現在的位置等於needle string的長度，表示字串已經完全匹配完
+            break;
+        else if (haystack[i] == needle[indexOfNeedle]) {
+            if (firstMatch) { 
+                ans = i; //紀錄起始位置
+                firstMatch = false; //不是第一次字元Match
+            }
+            indexOfNeedle += 1; //繼續比下一個字元
+        }
+        else {
+            if (!firstMatch) { //表示比到中間有任何一個字元不Match
+                i = ans; //將index重製至起始位置，等i++會到起始位置下一個
+                firstMatch = true;
+            }
+            indexOfNeedle = 0; //重新比對字串
+        }
+    }
+    if (indexOfNeedle != needle.length()) //如果不等於needle string的長度，表示比到一半就不Match
+        return -1;
+    else
+        return ans;
+}
+```
+* <font color="red">時間複雜度：</font>
+1.兩個字串長度haystack.length = n needle.length = m，所以是O(n*m)。
 ## Hash table 相關問題
 ### Q13 - Top Interview
 * <font color="red"> 題目：</font>將羅馬數字換算成數字<br>
